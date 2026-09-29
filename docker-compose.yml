@@ -1,7 +1,7 @@
 services:
   url-shortener:
+    image: ${IMAGE:-url-shortener}
     build: .
-    image: url-shortener
     container_name: url-shortener
     restart: unless-stopped
     ports:

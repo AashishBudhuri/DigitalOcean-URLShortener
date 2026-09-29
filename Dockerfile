@@ -4,7 +4,8 @@ WORKDIR /app
 
 COPY pom.xml .
 COPY src ./src
-RUN mvn -q -DskipTests package \
+# Unit tests run in CI before this image build
+RUN mvn -B -DskipTests package \
     && cp "$(ls target/url-shortener-*.jar | grep -v '\.original$' | head -n1)" /app/app.jar
 
 # Run

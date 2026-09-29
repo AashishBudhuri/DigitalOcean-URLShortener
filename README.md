@@ -55,6 +55,41 @@ docker run -d --name url-shortener --restart unless-stopped \
   --env-file .env -p 80:8080 url-shortener
 ```
 
+## CI/CD (GitHub Actions → Droplet)
+
+On every push to `main`, GitHub Actions:
+
+1. Runs unit tests (`mvn test`) — deploy is blocked if they fail  
+2. Builds the Docker image  
+3. Pushes it to GitHub Container Registry (`ghcr.io`)  
+4. SSHs into your Droplet, pulls the image, and restarts via Compose  
+
+### One-time GitHub secrets
+
+Repo → **Settings → Secrets and variables → Actions** → add:
+
+| Secret | Value |
+|--------|--------|
+| `DROPLET_HOST` | Droplet IP (e.g. `192.241.148.46`) |
+| `DROPLET_USER` | SSH user (often `root`) |
+| `DROPLET_SSH_PRIVATE_KEY` | Private key that can SSH to the Droplet |
+| `DROPLET_APP_DIR` | Optional; default `/root/DigitalOcean-URLShortener` |
+
+### One-time Droplet setup
+
+1. Ensure Docker + Compose work on the Droplet.  
+2. Keep a real `.env` on the Droplet (DB password, etc.) — CI will **not** overwrite it.  
+3. Add the matching **public** key to `~/.ssh/authorized_keys`.  
+4. For GHCR pulls as a non-public package, the workflow logs in with `GITHUB_TOKEN` during deploy.
+
+### Trigger
+
+```bash
+git push origin main
+```
+
+Or run **Build and deploy** manually under the Actions tab.
+
 ## API
 
 ### Create short URL
