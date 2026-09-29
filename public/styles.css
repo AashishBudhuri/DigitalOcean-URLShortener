@@ -1,0 +1,113 @@
+:root {
+  color-scheme: light dark;
+  --bg: #f6f7f9;
+  --fg: #1a1a1a;
+  --muted: #5c5c5c;
+  --border: #cfd3d8;
+  --accent: #0b5fff;
+  --error: #b42318;
+  --ok: #067647;
+  font-family: system-ui, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121418;
+    --fg: #f2f2f2;
+    --muted: #a0a4ab;
+    --border: #3a3f47;
+    --accent: #6b9fff;
+    --error: #f97066;
+    --ok: #47cd89;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--fg);
+  display: grid;
+  place-items: start center;
+  padding: 2rem 1rem;
+}
+
+main {
+  width: min(100%, 28rem);
+}
+
+h1 {
+  margin: 0 0 0.35rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+main > p {
+  margin: 0 0 1.25rem;
+  color: var(--muted);
+}
+
+form {
+  display: grid;
+  gap: 0.5rem;
+}
+
+label {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.optional {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+input {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  margin-bottom: 0.5rem;
+}
+
+input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+button {
+  margin-top: 0.25rem;
+  padding: 0.65rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+#message.error {
+  color: var(--error);
+}
+
+#message.info {
+  color: var(--ok);
+}
+
+#result a {
+  color: var(--accent);
+  word-break: break-all;
+}

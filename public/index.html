@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>URL Shortener</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main>
+    <h1>URL Shortener</h1>
+    <p>Submit a long URL and an optional custom alias.</p>
+
+    <form id="shorten-form" novalidate>
+      <label for="long-url">Long URL</label>
+      <input
+        id="long-url"
+        name="longUrl"
+        type="url"
+        placeholder="https://example.com/very/long/path"
+        required
+        autocomplete="url"
+      />
+
+      <label for="alias">Alias <span class="optional">(optional)</span></label>
+      <input
+        id="alias"
+        name="alias"
+        type="text"
+        placeholder="my-link"
+        pattern="[A-Za-z0-9_-]+"
+        title="Letters, numbers, hyphens, and underscores only"
+        autocomplete="off"
+      />
+
+      <button type="submit">Shorten</button>
+    </form>
+
+    <p id="message" role="status" aria-live="polite" hidden></p>
+    <p id="result" hidden>
+      Short URL: <a id="short-url" href="#" target="_blank" rel="noopener"></a>
+    </p>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package com.digitalocean.urlshortener.web;
 
+import com.digitalocean.urlshortener.web.dto.CreateURLResult;
 import com.digitalocean.urlshortener.web.dto.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +19,11 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handleValidation(MethodArgumentNotValidException ex) {
+    public ResponseEntity<CreateURLResult> handleValidation(MethodArgumentNotValidException ex) {
         String message = ex.getBindingResult().getFieldErrors().stream()
                 .findFirst()
                 .map(error -> error.getDefaultMessage())
                 .orElse("Invalid request");
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(message));
+        return ResponseEntity.ok(CreateURLResult.failure(message));
     }
 }
