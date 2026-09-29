@@ -10,10 +10,38 @@ Service to shorten and return URLs
 
 ```bash
 cd DigitalOcean-URLShortener
+./run.sh
+```
+
+Or with Maven directly:
+
+```bash
 mvn spring-boot:run
 ```
 
+Optional env vars for `./run.sh`:
+- `PORT=8080` — HTTP port
+- `SKIP_TESTS=true` — skip tests during build (default)
+
 Open http://localhost:8080/
+
+## Docker
+
+```bash
+docker build -t url-shortener .
+docker run --rm -p 8080:8080 url-shortener
+```
+
+### Managed Postgres (prod profile)
+
+```bash
+docker run -d --name url-shortener --restart unless-stopped -p 80:8080 \
+  -e SPRING_PROFILES_ACTIVE=prod \
+  -e SPRING_DATASOURCE_URL='jdbc:postgresql://HOST:25060/defaultdb?sslmode=require' \
+  -e SPRING_DATASOURCE_USERNAME='doadmin' \
+  -e SPRING_DATASOURCE_PASSWORD='YOUR_PASSWORD' \
+  url-shortener
+```
 
 ## API
 
