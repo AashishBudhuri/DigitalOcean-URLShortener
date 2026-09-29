@@ -15,11 +15,7 @@ COPY --from=build /app/app.jar ./app.jar
 COPY public ./public
 
 ENV SERVER_PORT=8080
-# For Managed Postgres on the Droplet, set:
-#   SPRING_PROFILES_ACTIVE=prod
-#   SPRING_DATASOURCE_URL=jdbc:postgresql://HOST:25060/defaultdb?sslmode=require
-#   SPRING_DATASOURCE_USERNAME=...
-#   SPRING_DATASOURCE_PASSWORD=...
+# Runtime config comes from .env via docker compose --env-file / env_file.
 EXPOSE 8080
 
 ENTRYPOINT ["java", "-jar", "app.jar"]

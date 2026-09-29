@@ -1,0 +1,10 @@
+services:
+  url-shortener:
+    build: .
+    image: url-shortener
+    container_name: url-shortener
+    restart: unless-stopped
+    ports:
+      - "${HOST_PORT:-80}:8080"
+    env_file:
+      - .env

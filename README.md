@@ -32,15 +32,27 @@ docker build -t url-shortener .
 docker run --rm -p 8080:8080 url-shortener
 ```
 
-### Managed Postgres (prod profile)
+### Managed Postgres (`.env` is source of truth)
+
+1. Copy and edit secrets (never commit `.env`):
 
 ```bash
-docker run -d --name url-shortener --restart unless-stopped -p 80:8080 \
-  -e SPRING_PROFILES_ACTIVE=prod \
-  -e SPRING_DATASOURCE_URL='jdbc:postgresql://HOST:25060/defaultdb?sslmode=require' \
-  -e SPRING_DATASOURCE_USERNAME='doadmin' \
-  -e SPRING_DATASOURCE_PASSWORD='YOUR_PASSWORD' \
-  url-shortener
+cp .env.example .env
+# set DB_HOST, DB_USERNAME, DB_PASSWORD, etc.
+```
+
+2. Run with Compose:
+
+```bash
+docker compose up -d --build
+```
+
+Or with plain Docker:
+
+```bash
+docker build -t url-shortener .
+docker run -d --name url-shortener --restart unless-stopped \
+  --env-file .env -p 80:8080 url-shortener
 ```
 
 ## API
